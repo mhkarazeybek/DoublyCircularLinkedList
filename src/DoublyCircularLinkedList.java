@@ -25,6 +25,30 @@ public class DoublyCircularLinkedList {
 
         //fonksiyonla erişim
         access2LinkedListWithFunc(head);
+
+        System.out.println("-----------------Başa Ekleme---------------------");
+        addStudent2Begin(new Student("Öykü"));
+        access2LinkedListWithFunc(head);
+
+        System.out.println("-----------------Sona Ekleme---------------------");
+        addStudent2End(new Student("Sare"));
+        access2LinkedListWithFunc(head);
+
+        System.out.println("-----------------Araya Ekleme---------------------");
+        addStudent2Between("Muhammed Hüseyin", new Student("Demiral"));
+        access2LinkedListWithFunc(head);
+
+        System.out.println("-----------------Başdan Silme---------------------");
+        removeStudent2Begin();
+        access2LinkedListWithFunc(head);
+
+        System.out.println("-----------------Sondan Silme---------------------");
+        removeStudent2End();
+        access2LinkedListWithFunc(head);
+        
+        System.out.println("-----------------Aradan Silme---------------------");
+        removeStudent2Between("Zehra Şevval");
+        access2LinkedListWithFunc(head);
     }
 
 
@@ -56,11 +80,54 @@ public class DoublyCircularLinkedList {
             head=student;
             tail=student;
             return;
+        }else {
+            tail.next=student;
+            student.prev=tail; 
         }
+        tail = student;
+        tail.next=head;
+    }
+    public static void addStudent2Begin(Student student) {
+        student.next=head;
+        student.prev=tail;
+        tail.next=student;
+        head=student;
+        head.prev=tail;
+    }
+    public static void addStudent2End(Student student) {
         student.next=head;
         student.prev=tail;
         tail.next=student;
         tail=student;
         head.prev=tail;
+    }
+    public static void addStudent2Between(String name,Student student) {
+        Student temp = head;
+        while(!temp.getName().equals(name))
+            temp = temp.next;
+
+        student.next=temp.next;
+        student.prev=temp;
+        temp.next=student;
+    }
+    public static void removeStudent2Begin() {
+        head = head.next;
+		tail.next = head;
+    }   
+    public static void removeStudent2End(){
+
+        Student temp = head;
+        while(temp.next != tail)
+            temp=temp.next;
+        temp.next=head;
+        tail=temp;
+    }
+    public static void removeStudent2Between(String name){
+
+        Student temp = head;
+        while(!temp.next.getName().equals(name)){
+            temp = temp.next;
+        }
+        temp.next = temp.next.next;
     }
 }
